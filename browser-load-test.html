@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<script src="../dist/ptw.bundle.js"></script>
+<script src="../dist/mock-axios.bundle.js"></script>
+<script>
+  console.log(
+    PaymentTerminalWidget &&
+    new PaymentTerminalWidget() instanceof PaymentTerminalWidget &&
+    PaymentTerminalWidget.OperationalError &&
+    new PaymentTerminalWidget().axios ?
+      'PTW Loads in browser' :
+      'PTW Does not load in browser',
+  )
+  console.log(
+    mock && mockMethod && mockResponseInterceptors ?
+      'Mocks load  in browser' :
+      'Mocks do not load in browser',
+  )
+
+  const ptw = new PaymentTerminalWidget()
+  ptw.axios = mock(ptw.axios)
+
+  ptw.displayHome().then(function (status) {
+    console.log(status)
+    ptw.displayMessage('foo').then(function (status) {
+      console.log(status)
+      ptw.displayOff().then(function (status) {
+        console.log(status)
+        ptw.displayApproval().then(function (status) {
+          console.log(status)
+          ptw.displayTenders().then(function (status) {
+            console.log(status)
+            ptw.displayItems().then(function (status) {
+              console.log(status)
+              ptw.activateReader().then(function (status) {
+                console.log(status)
+                ptw.getReaderStatus().then(function (status) {
+                  console.log(status)
+                  ptw.getReaderStatus().then(function (status) {
+                    console.log(status)
+                    ptw.cancelReaderActivation().then(function (status) {
+                      console.log(status)
+                      ptw.readCardData({
+                        activationRequest: { vaultToken: 'foo' },
+                        onStatus: console.log,
+                      }).then(function (status) {
+                        console.log(status)
+                      })
+                    })
+
+                  })
+                })
+              })
+            })
+          })
+        })
+      })
+  })
+  })
+</script>
+</body>
+</html>
